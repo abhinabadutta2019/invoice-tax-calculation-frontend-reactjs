@@ -89,7 +89,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
                 <span>
                   Discount Amount - ${service.discountAmount.toFixed(2)}
                 </span>
-                <span>Tax Amount - ${service.taxAmount.toFixed(2)}</span> -
+                -<span>Tax Amount - ${service.taxAmount.toFixed(2)}</span> -
                 <span>Selling Price - ${service.finalPrice.toFixed(2)}</span>
                 <button onClick={() => handleRemoveService(service._id)}>
                   Remove

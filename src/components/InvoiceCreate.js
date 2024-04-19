@@ -12,8 +12,9 @@ const InvoiceCreate = () => {
   const [services, setServices] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [isEditMode, setIsEditMode] = useState(true);
+  const [totalTaxAmount, setTotalTaxAmount] = useState(0);
+  const [totalDiscountAmount, setTotalDiscountAmount] = useState(0);
 
-  //
   const fetchInvoice = async () => {
     try {
       const savedId = localStorage.getItem("_id");
@@ -28,7 +29,9 @@ const InvoiceCreate = () => {
         setDueDate(invoice.dueDate.slice(0, 10));
         setPaymentMethod(invoice.paymentMethod);
         setServices(invoice.services);
-        setTotalAmount(invoice.totalAmount.toString());
+        setTotalAmount(invoice.totalAmount.toFixed(2));
+        setTotalTaxAmount(invoice.totalTaxAmount.toFixed(2));
+        setTotalDiscountAmount(invoice.totalDiscountAmount.toFixed(2));
         setIsEditMode(false);
       } else {
         setIsEditMode(true);
@@ -37,33 +40,8 @@ const InvoiceCreate = () => {
       console.error("Error fetching invoice:", error);
     }
   };
-  //
 
   useEffect(() => {
-    // const fetchInvoice = async () => {
-    //   try {
-    //     const savedId = localStorage.getItem("_id");
-    //     if (savedId) {
-    //       const response = await axios.get(
-    //         `http://localhost:3012/invoice/${savedId}`
-    //       );
-    //       const invoice = response.data;
-    //       setInvoiceNumber(invoice.invoiceNumber);
-    //       setCustomerName(invoice.customerName);
-    //       setInvoiceDate(invoice.invoiceDate.slice(0, 10));
-    //       setDueDate(invoice.dueDate.slice(0, 10));
-    //       setPaymentMethod(invoice.paymentMethod);
-    //       setServices(invoice.services);
-    //       setTotalAmount(invoice.totalAmount.toString());
-    //       setIsEditMode(false);
-    //     } else {
-    //       setIsEditMode(true);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching invoice:", error);
-    //   }
-    // };
-
     fetchInvoice();
   }, []);
 
@@ -93,7 +71,7 @@ const InvoiceCreate = () => {
   };
 
   const handleUpdateInvoice = async (e) => {
-    e.preventDefault(); // Prevents the default form submission behavior
+    e.preventDefault();
     try {
       const invoice = {
         customerName,
@@ -105,7 +83,6 @@ const InvoiceCreate = () => {
         totalAmount: parseFloat(totalAmount),
       };
 
-      // console.log(updateInvoice, "updateInvoice"); // Logging the updateInvoice function
       const updatedInvoice = await updateInvoice(
         localStorage.getItem("_id"),
         invoice
@@ -121,9 +98,7 @@ const InvoiceCreate = () => {
     <div>
       <h6>Create Invoice</h6>
 
-      <form
-      // onSubmit={isEditMode ? handleUpdateInvoice : handleUpdateInvoice}
-      >
+      <form>
         <input
           placeholder="Invoice Number"
           value={invoiceNumber}
@@ -153,7 +128,6 @@ const InvoiceCreate = () => {
           disabled={!isEditMode}
           required
         />
-
         <select
           value={paymentMethod}
           onChange={(e) => setPaymentMethod(e.target.value)}
@@ -167,15 +141,27 @@ const InvoiceCreate = () => {
           <option value="Bank Transfer">Bank Transfer</option>
           <option value="Other">Other</option>
         </select>
-        <input
+        {/* <input
           placeholder="Total Amount"
           type="number"
           value={totalAmount}
           onChange={(e) => setTotalAmount(e.target.value)}
-          // disabled={!isEditMode}
           disabled
-          // required
         />
+        <input
+          placeholder="Total Tax Amount"
+          type="number"
+          value={totalTaxAmount}
+          onChange={(e) => setTotalTaxAmount(e.target.value)}
+          disabled
+        />
+        <input
+          placeholder="Total Discount Amount"
+          type="number"
+          value={totalDiscountAmount}
+          onChange={(e) => setTotalDiscountAmount(e.target.value)}
+          disabled
+        /> */}
         {localStorage.getItem("_id") ? (
           <button type="submit" onClick={handleUpdateInvoice}>
             Update Invoice
@@ -192,13 +178,20 @@ const InvoiceCreate = () => {
         )}
       </form>
 
-      {/* service component */}
-
+      {/* Service component */}
       <ServiceForm
         _id={localStorage.getItem("_id")}
         setServices={setServices}
         fetchInvoice={fetchInvoice}
       />
+
+      {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
+      <div>
+        <h6>Invoice Totals</h6>
+        <p>Total Amount: ${totalAmount}</p>
+        <p>Total Tax Amount: ${totalTaxAmount}</p>
+        <p>Total Discount Amount: ${totalDiscountAmount}</p>
+      </div>
     </div>
   );
 };
