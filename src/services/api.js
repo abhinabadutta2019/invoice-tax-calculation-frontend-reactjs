@@ -51,6 +51,17 @@ export const addTax = async (tax) => {
   }
 };
 
+export const getAllTaxes = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tax`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
 export const updateInvoice = async (id, invoice) => {
   try {
     const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice);

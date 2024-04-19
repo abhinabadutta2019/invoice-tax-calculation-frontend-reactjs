@@ -3,6 +3,7 @@ import {
   addServiceToInvoice,
   getInvoice,
   removeServiceFromInvoice,
+  getAllTaxes,
 } from "../services/api";
 
 const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
@@ -11,6 +12,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [taxId, setTaxId] = useState("");
   const [invoiceServices, setInvoiceServices] = useState([]);
+  const [taxes, setTaxes] = useState([]);
 
   useEffect(() => {
     const fetchInvoiceServices = async () => {
@@ -22,7 +24,17 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       }
     };
 
+    const fetchTaxes = async () => {
+      try {
+        const taxesData = await getAllTaxes();
+        setTaxes(taxesData);
+      } catch (error) {
+        console.error("Error fetching taxes:", error);
+      }
+    };
+
     fetchInvoiceServices();
+    fetchTaxes();
   }, [_id]);
 
   const handleSubmitService = async (e) => {
@@ -42,8 +54,8 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       // Fetch and update the latest invoice data
       const updatedInvoiceData = await getInvoice(_id);
       setInvoiceServices(updatedInvoiceData.services);
-      //
       fetchInvoice();
+
       // Clear service form fields
       setServiceType("");
       setSellingPrice(0);
@@ -111,12 +123,19 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
           onChange={(e) => setDiscountPercentage(e.target.value)}
           required
         />
-        <input
-          placeholder="Tax ID"
+        <select
+          placeholder="Tax"
           value={taxId}
           onChange={(e) => setTaxId(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Tax</option>
+          {taxes.map((tax, index) => (
+            <option key={index} value={tax._id}>
+              {tax.taxName} - {tax.taxRate}%
+            </option>
+          ))}
+        </select>
         <button type="submit">Add Service</button>
       </form>
     </div>
