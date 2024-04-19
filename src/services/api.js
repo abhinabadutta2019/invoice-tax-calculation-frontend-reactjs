@@ -13,24 +13,10 @@ export const addInvoice = async (invoice) => {
   }
 };
 
-// export const addServiceToInvoice = async (invoiceId, service) => {
-//   try {
-//     const response = await axios.post(
-//       `${BASE_URL}/invoice/${invoiceId}/add-service`,
-//       service
-//     );
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(
-//       error.response ? error.response.data.message : error.message
-//     );
-//   }
-// };
-
 export const addServiceToInvoice = async (_id, service) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/invoice/${_id}/add-service`, // <-- Updated this line
+      `${BASE_URL}/invoice/${_id}/add-service`,
       service
     );
     return response.data;
@@ -54,10 +40,18 @@ export const addTax = async (tax) => {
 
 export const updateInvoice = async (id, invoice) => {
   try {
-    const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice); // Used the router.put route
-    //
-    // console.log(updateInvoice, "updateInvoice");
-    //
+    const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
+export const getInvoice = async (_id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/invoice/${_id}`);
     return response.data;
   } catch (error) {
     throw new Error(
