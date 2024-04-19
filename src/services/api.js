@@ -27,6 +27,19 @@ export const addServiceToInvoice = async (_id, service) => {
   }
 };
 
+export const removeServiceFromInvoice = async (_id, serviceId) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/invoice/${_id}/remove-service/${serviceId}`
+    );
+    return response.data.updatedInvoice;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
 export const addTax = async (tax) => {
   try {
     const response = await axios.post(`${BASE_URL}/tax`, tax);

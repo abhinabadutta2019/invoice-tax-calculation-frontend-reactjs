@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { addServiceToInvoice, getInvoice } from "../services/api";
+import {
+  addServiceToInvoice,
+  getInvoice,
+  removeServiceFromInvoice,
+} from "../services/api";
 
 const ServiceForm = ({ _id, setServices }) => {
   const [serviceType, setServiceType] = useState("");
@@ -49,6 +53,15 @@ const ServiceForm = ({ _id, setServices }) => {
     }
   };
 
+  const handleRemoveService = async (serviceId) => {
+    try {
+      const updatedInvoice = await removeServiceFromInvoice(_id, serviceId);
+      setInvoiceServices(updatedInvoice.services);
+    } catch (error) {
+      console.error("Error removing service:", error);
+    }
+  };
+
   return (
     <div>
       {invoiceServices.length > 0 && (
@@ -60,6 +73,9 @@ const ServiceForm = ({ _id, setServices }) => {
                 <span>{service.serviceType}</span>-
                 <span>Price - ${service.sellingPrice}</span> -
                 <span>Discount- {service.discountPercentage}%</span>
+                <button onClick={() => handleRemoveService(service._id)}>
+                  Remove
+                </button>
               </li>
             ))}
           </ul>
