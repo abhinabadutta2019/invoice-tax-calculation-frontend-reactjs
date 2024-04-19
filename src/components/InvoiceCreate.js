@@ -67,7 +67,7 @@ const InvoiceCreate = () => {
   };
 
   const handleUpdateInvoice = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevents the default form submission behavior
     try {
       const invoice = {
         customerName,
@@ -79,6 +79,7 @@ const InvoiceCreate = () => {
         totalAmount: parseFloat(totalAmount),
       };
 
+      console.log(updateInvoice, "updateInvoice"); // Logging the updateInvoice function
       const updatedInvoice = await updateInvoice(
         localStorage.getItem("_id"),
         invoice
@@ -94,7 +95,9 @@ const InvoiceCreate = () => {
     <div>
       <h6>Create Invoice</h6>
 
-      <form onSubmit={isEditMode ? handleCreateInvoice : handleUpdateInvoice}>
+      <form
+      // onSubmit={isEditMode ? handleUpdateInvoice : handleUpdateInvoice}
+      >
         <input
           placeholder="Invoice Number"
           value={invoiceNumber}
@@ -143,11 +146,14 @@ const InvoiceCreate = () => {
           type="number"
           value={totalAmount}
           onChange={(e) => setTotalAmount(e.target.value)}
-          disabled={!isEditMode}
-          required
+          // disabled={!isEditMode}
+          disabled
+          // required
         />
-        {!isEditMode ? (
-          <button type="submit">Update Invoice</button>
+        {localStorage.getItem("_id") ? (
+          <button type="submit" onClick={handleUpdateInvoice}>
+            Update Invoice
+          </button>
         ) : (
           <button type="button" onClick={handleCreateInvoice}>
             Create Invoice

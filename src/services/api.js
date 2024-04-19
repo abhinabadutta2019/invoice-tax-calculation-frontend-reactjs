@@ -1,3 +1,4 @@
+// services/api.js
 import axios from "axios";
 
 const BASE_URL = "http://localhost:3012";
@@ -40,7 +41,8 @@ export const addTax = async (tax) => {
 
 export const updateInvoice = async (id, invoice) => {
   try {
-    const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice); // Used the router.put route
+    const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice);
+    console.log(response.data, "updatedInvoice"); // Logging the response.data
     return response.data;
   } catch (error) {
     throw new Error(
