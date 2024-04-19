@@ -84,9 +84,13 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
           <ul>
             {invoiceServices.map((service, index) => (
               <li key={index}>
-                <span>{service.serviceType}</span>-
-                <span>Price - ${service.sellingPrice}</span> -
-                <span>Discount- {service.discountPercentage}%</span>
+                <span>{service.serviceType}</span>- -
+                <span>Discount- {service.discountPercentage}%</span>-{" "}
+                <span>
+                  Discount Amount - ${service.discountAmount.toFixed(2)}
+                </span>
+                <span>Tax Amount - ${service.taxAmount.toFixed(2)}</span> -
+                <span>Selling Price - ${service.finalPrice.toFixed(2)}</span>
                 <button onClick={() => handleRemoveService(service._id)}>
                   Remove
                 </button>
