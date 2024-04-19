@@ -18,7 +18,7 @@ const InvoiceCreate = () => {
   const fetchInvoice = async () => {
     try {
       const savedId = localStorage.getItem("_id");
-      if (savedId) {
+      if (savedId && savedId !== "null") {
         const response = await axios.get(
           `http://localhost:3012/invoice/${savedId}`
         );
@@ -168,7 +168,7 @@ const InvoiceCreate = () => {
           </button>
         ) : (
           <button type="button" onClick={handleCreateInvoice}>
-            Create Invoice
+            Add Task to Invoice
           </button>
         )}
         {!isEditMode && (

@@ -17,8 +17,10 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
   useEffect(() => {
     const fetchInvoiceServices = async () => {
       try {
-        const invoice = await getInvoice(_id);
-        setInvoiceServices(invoice.services);
+        if (_id && _id !== "null") {
+          const invoice = await getInvoice(_id);
+          setInvoiceServices(invoice.services);
+        }
       } catch (error) {
         console.error("Error fetching invoice services:", error);
       }
@@ -52,9 +54,11 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       setServices([...updatedInvoice.services]);
 
       // Fetch and update the latest invoice data
-      const updatedInvoiceData = await getInvoice(_id);
-      setInvoiceServices(updatedInvoiceData.services);
-      fetchInvoice();
+      if (_id && _id !== "null") {
+        const updatedInvoiceData = await getInvoice(_id);
+        setInvoiceServices(updatedInvoiceData.services);
+        fetchInvoice();
+      }
 
       // Clear service form fields
       setServiceType("");
@@ -75,6 +79,10 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       console.error("Error removing service:", error);
     }
   };
+
+  if (!_id || _id === "null") {
+    return <div>No Invoice Selected</div>;
+  }
 
   return (
     <div>
