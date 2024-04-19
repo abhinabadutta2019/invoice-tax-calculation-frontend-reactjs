@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { addServiceToInvoice } from "../services/api";
 
-const ServiceForm = ({ invoiceNumber, setServices }) => {
+const ServiceForm = ({ _id, setServices }) => {
   const [serviceType, setServiceType] = useState("");
   const [sellingPrice, setSellingPrice] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -18,8 +18,14 @@ const ServiceForm = ({ invoiceNumber, setServices }) => {
     };
 
     try {
-      const updatedInvoice = await addServiceToInvoice(invoiceNumber, service);
+      const updatedInvoice = await addServiceToInvoice(_id, service);
       setServices([...updatedInvoice.services]);
+
+      //   const updatedInvoice = await addServiceToInvoice(
+      //     { _id: invoiceNumber }, // <-- Updated this line
+      //     service
+      //   );
+      //   setServices([...updatedInvoice.services]);
 
       // Clear service form fields
       setServiceType("");

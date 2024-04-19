@@ -1,4 +1,3 @@
-// services/api.js
 import axios from "axios";
 
 const BASE_URL = "http://localhost:3012";
@@ -14,10 +13,24 @@ export const addInvoice = async (invoice) => {
   }
 };
 
-export const addServiceToInvoice = async (invoiceId, service) => {
+// export const addServiceToInvoice = async (invoiceId, service) => {
+//   try {
+//     const response = await axios.post(
+//       `${BASE_URL}/invoice/${invoiceId}/add-service`,
+//       service
+//     );
+//     return response.data;
+//   } catch (error) {
+//     throw new Error(
+//       error.response ? error.response.data.message : error.message
+//     );
+//   }
+// };
+
+export const addServiceToInvoice = async (_id, service) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/invoice/${invoiceId}/add-service`,
+      `${BASE_URL}/invoice/${_id}/add-service`, // <-- Updated this line
       service
     );
     return response.data;
@@ -41,8 +54,10 @@ export const addTax = async (tax) => {
 
 export const updateInvoice = async (id, invoice) => {
   try {
-    const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice);
-    console.log(response.data, "updatedInvoice"); // Logging the response.data
+    const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice); // Used the router.put route
+    //
+    // console.log(updateInvoice, "updateInvoice");
+    //
     return response.data;
   } catch (error) {
     throw new Error(

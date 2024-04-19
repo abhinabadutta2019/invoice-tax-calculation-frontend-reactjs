@@ -79,7 +79,7 @@ const InvoiceCreate = () => {
         totalAmount: parseFloat(totalAmount),
       };
 
-      console.log(updateInvoice, "updateInvoice"); // Logging the updateInvoice function
+      // console.log(updateInvoice, "updateInvoice"); // Logging the updateInvoice function
       const updatedInvoice = await updateInvoice(
         localStorage.getItem("_id"),
         invoice
@@ -166,7 +166,12 @@ const InvoiceCreate = () => {
         )}
       </form>
 
-      <ServiceForm invoiceNumber={invoiceNumber} setServices={setServices} />
+      {/* service component */}
+
+      <ServiceForm
+        _id={localStorage.getItem("_id")}
+        setServices={setServices}
+      />
     </div>
   );
 };
