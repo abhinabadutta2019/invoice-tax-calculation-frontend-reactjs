@@ -5,7 +5,7 @@ import {
   removeServiceFromInvoice,
 } from "../services/api";
 
-const ServiceForm = ({ _id, setServices }) => {
+const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
   const [serviceType, setServiceType] = useState("");
   const [sellingPrice, setSellingPrice] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -42,7 +42,8 @@ const ServiceForm = ({ _id, setServices }) => {
       // Fetch and update the latest invoice data
       const updatedInvoiceData = await getInvoice(_id);
       setInvoiceServices(updatedInvoiceData.services);
-
+      //
+      fetchInvoice();
       // Clear service form fields
       setServiceType("");
       setSellingPrice(0);
@@ -57,6 +58,7 @@ const ServiceForm = ({ _id, setServices }) => {
     try {
       const updatedInvoice = await removeServiceFromInvoice(_id, serviceId);
       setInvoiceServices(updatedInvoice.services);
+      fetchInvoice();
     } catch (error) {
       console.error("Error removing service:", error);
     }

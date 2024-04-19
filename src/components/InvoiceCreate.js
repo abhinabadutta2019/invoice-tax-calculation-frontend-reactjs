@@ -13,30 +13,56 @@ const InvoiceCreate = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [isEditMode, setIsEditMode] = useState(true);
 
-  useEffect(() => {
-    const fetchInvoice = async () => {
-      try {
-        const savedId = localStorage.getItem("_id");
-        if (savedId) {
-          const response = await axios.get(
-            `http://localhost:3012/invoice/${savedId}`
-          );
-          const invoice = response.data;
-          setInvoiceNumber(invoice.invoiceNumber);
-          setCustomerName(invoice.customerName);
-          setInvoiceDate(invoice.invoiceDate.slice(0, 10));
-          setDueDate(invoice.dueDate.slice(0, 10));
-          setPaymentMethod(invoice.paymentMethod);
-          setServices(invoice.services);
-          setTotalAmount(invoice.totalAmount.toString());
-          setIsEditMode(false);
-        } else {
-          setIsEditMode(true);
-        }
-      } catch (error) {
-        console.error("Error fetching invoice:", error);
+  //
+  const fetchInvoice = async () => {
+    try {
+      const savedId = localStorage.getItem("_id");
+      if (savedId) {
+        const response = await axios.get(
+          `http://localhost:3012/invoice/${savedId}`
+        );
+        const invoice = response.data;
+        setInvoiceNumber(invoice.invoiceNumber);
+        setCustomerName(invoice.customerName);
+        setInvoiceDate(invoice.invoiceDate.slice(0, 10));
+        setDueDate(invoice.dueDate.slice(0, 10));
+        setPaymentMethod(invoice.paymentMethod);
+        setServices(invoice.services);
+        setTotalAmount(invoice.totalAmount.toString());
+        setIsEditMode(false);
+      } else {
+        setIsEditMode(true);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching invoice:", error);
+    }
+  };
+  //
+
+  useEffect(() => {
+    // const fetchInvoice = async () => {
+    //   try {
+    //     const savedId = localStorage.getItem("_id");
+    //     if (savedId) {
+    //       const response = await axios.get(
+    //         `http://localhost:3012/invoice/${savedId}`
+    //       );
+    //       const invoice = response.data;
+    //       setInvoiceNumber(invoice.invoiceNumber);
+    //       setCustomerName(invoice.customerName);
+    //       setInvoiceDate(invoice.invoiceDate.slice(0, 10));
+    //       setDueDate(invoice.dueDate.slice(0, 10));
+    //       setPaymentMethod(invoice.paymentMethod);
+    //       setServices(invoice.services);
+    //       setTotalAmount(invoice.totalAmount.toString());
+    //       setIsEditMode(false);
+    //     } else {
+    //       setIsEditMode(true);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching invoice:", error);
+    //   }
+    // };
 
     fetchInvoice();
   }, []);
@@ -171,6 +197,7 @@ const InvoiceCreate = () => {
       <ServiceForm
         _id={localStorage.getItem("_id")}
         setServices={setServices}
+        fetchInvoice={fetchInvoice}
       />
     </div>
   );
