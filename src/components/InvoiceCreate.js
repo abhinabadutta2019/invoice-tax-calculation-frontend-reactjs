@@ -238,17 +238,11 @@ const InvoiceCreate = () => {
           )}
         </div>
 
-        {localStorage.getItem("_id") ? (
-          <button
-            type="submit"
-            className={`btn btn-primary ${isEditMode ? "" : "disabled"}`}
-            disabled={!isEditMode}
-          >
-            Update Invoice
-          </button>
-        ) : (
+        {isEditMode && (
           <button type="submit" className="btn btn-primary">
-            Add Task to Invoice
+            {localStorage.getItem("_id")
+              ? "Update Invoice"
+              : "Add Task to Invoice"}
           </button>
         )}
         {!isEditMode && (

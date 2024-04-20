@@ -6,7 +6,7 @@ import {
   getAllTaxes,
 } from "../services/api";
 
-const ServiceForm = ({ _id, setServices, fetchInvoice, isEditMode }) => {
+const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
   const [serviceType, setServiceType] = useState("");
   const [sellingPrice, setSellingPrice] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -81,15 +81,15 @@ const ServiceForm = ({ _id, setServices, fetchInvoice, isEditMode }) => {
   };
 
   if (!_id || _id === "null") {
-    return <div>No Invoice Selected</div>;
+    return <div>{/* No Invoice Selected */}</div>;
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-4">
       {invoiceServices.length > 0 && (
         <>
           <h6>Services in Invoice</h6>
-          <table className="table table-bordered">
+          <table className="table table-striped">
             <thead>
               <tr>
                 <th>Service Type</th>
@@ -110,7 +110,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice, isEditMode }) => {
                   <td>${service.finalPrice.toFixed(2)}</td>
                   <td>
                     <button
-                      className="btn btn-danger"
+                      className="btn btn-danger btn-sm"
                       onClick={() => handleRemoveService(service._id)}
                     >
                       Remove
@@ -124,9 +124,10 @@ const ServiceForm = ({ _id, setServices, fetchInvoice, isEditMode }) => {
       )}
 
       {invoiceServices.length === 0 && (
-        <h6>No services added to this invoice yet.</h6>
+        <div className="p-3 mb-4 bg-light">
+          <h6>No services added to this invoice yet.</h6>
+        </div>
       )}
-
       <h6>Add Services to Invoice</h6>
 
       <form onSubmit={handleSubmitService}>
@@ -191,11 +192,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice, isEditMode }) => {
             ))}
           </select>
         </div>
-        <button
-          type="submit"
-          className={`btn btn-primary ${isEditMode ? "" : "disabled"}`}
-          disabled={!isEditMode}
-        >
+        <button type="submit" className="btn btn-primary">
           Add Service
         </button>
       </form>
