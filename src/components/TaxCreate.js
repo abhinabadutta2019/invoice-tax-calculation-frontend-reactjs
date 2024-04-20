@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { addTax } from "../services/api";
-import AllTaxes from "./AllTaxes"; // Import the AllTaxes component
+import { addTax, getAllTaxes } from "../services/api";
+import AllTaxes from "./AllTaxes";
 
 const TaxCreate = () => {
   const [taxName, setTaxName] = useState("");
   const [taxRate, setTaxRate] = useState("");
+
+  const handleNewTaxAdded = async () => {
+    try {
+      const allTaxes = await getAllTaxes();
+      return allTaxes;
+    } catch (error) {
+      console.error("Error fetching taxes:", error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +27,7 @@ const TaxCreate = () => {
       await addTax(tax);
       setTaxName("");
       setTaxRate("");
+      handleNewTaxAdded();
     } catch (error) {
       console.error("Error adding tax:", error);
     }
@@ -45,7 +55,7 @@ const TaxCreate = () => {
       </form>
 
       {/* Display all taxes */}
-      <AllTaxes />
+      <AllTaxes onNewTaxAdded={handleNewTaxAdded} />
     </div>
   );
 };

@@ -1,8 +1,7 @@
-// AllTaxes.js
 import React, { useState, useEffect } from "react";
-import { getAllTaxes } from "../services/api";
+import { getAllTaxes, toggleTaxDisabled } from "../services/api";
 
-const AllTaxes = () => {
+const AllTaxes = ({ onNewTaxAdded }) => {
   const [taxes, setTaxes] = useState([]);
 
   useEffect(() => {
@@ -16,7 +15,22 @@ const AllTaxes = () => {
     };
 
     fetchTaxes();
-  }, []);
+  }, [onNewTaxAdded]);
+
+  const handleToggleTax = async (id) => {
+    try {
+      const updatedTax = await toggleTaxDisabled(id);
+      setTaxes((prevTaxes) =>
+        prevTaxes.map((tax) =>
+          tax._id === updatedTax._id
+            ? { ...tax, disabled: updatedTax.disabled }
+            : tax
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling tax:", error);
+    }
+  };
 
   return (
     <div>
@@ -26,6 +40,8 @@ const AllTaxes = () => {
           <tr>
             <th>Tax Name</th>
             <th>Tax Rate (%)</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +49,12 @@ const AllTaxes = () => {
             <tr key={tax._id}>
               <td>{tax.taxName}</td>
               <td>{tax.taxRate}%</td>
+              <td>{tax.disabled ? "Disabled" : "Enabled"}</td>
+              <td>
+                <button onClick={() => handleToggleTax(tax._id)}>
+                  {tax.disabled ? "Enable" : "Disable"}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

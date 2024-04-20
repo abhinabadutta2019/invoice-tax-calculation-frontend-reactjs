@@ -51,28 +51,6 @@ export const removeServiceFromInvoice = async (_id, serviceId) => {
   }
 };
 
-export const addTax = async (tax) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/tax`, tax);
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      error.response ? error.response.data.message : error.message
-    );
-  }
-};
-
-export const getAllTaxes = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/tax`);
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      error.response ? error.response.data.message : error.message
-    );
-  }
-};
-
 export const updateInvoice = async (id, invoice) => {
   try {
     const response = await axios.put(`${BASE_URL}/invoice/${id}`, invoice);
@@ -98,6 +76,39 @@ export const getInvoice = async (_id) => {
 export const getAllInvoices = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/invoice/`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
+export const addTax = async (tax) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/tax`, tax);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
+export const getAllTaxes = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/tax`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
+export const toggleTaxDisabled = async (id) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/tax/${id}/toggle`);
     return response.data;
   } catch (error) {
     throw new Error(
