@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3012";
+const BASE_URL = "https://invoicely-nvq7.onrender.com";
 
 //
 export const downloadInvoicePdf = async (id) => {
