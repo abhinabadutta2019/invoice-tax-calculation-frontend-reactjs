@@ -98,8 +98,8 @@ const InvoiceEdit = () => {
 
   return (
     <>
-      <div className="container mt-5 pb-4">
-        <h6>Edit Invoice</h6>
+      <div className="container pb-4">
+        <h4 className="text-center">Edit Invoice</h4>
 
         <form id="invoiceForm" onSubmit={handleCreateOrUpdateInvoice}>
           <div className="mb-3">

@@ -144,8 +144,8 @@ const InvoiceCreate = () => {
 
   return (
     <>
-      <div className="container mt-5 pb-4">
-        <h6>Create Invoice</h6>
+      <div className="container pb-4">
+        <h4 className="text-center ">Create Invoice</h4>
 
         <form
           onSubmit={

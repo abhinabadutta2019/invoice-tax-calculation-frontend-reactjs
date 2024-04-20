@@ -19,6 +19,11 @@ const TaxCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (parseFloat(taxRate) > 100) {
+      alert("Tax Rate should be less than or equal to 100");
+      return;
+    }
+
     try {
       const tax = {
         taxName,

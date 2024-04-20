@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <h1 className="navbar-brand">
-          <Link to="/">Invoicely</Link>
+          <Link to="/">📇Invoicely</Link>
         </h1>
         <button
           className="navbar-toggler"
@@ -22,11 +22,6 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/" className="nav-link">
-                Create Invoice
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to="/all-invoice" className="nav-link">
                 Invoice List
               </Link>
@@ -34,6 +29,11 @@ const Navbar = () => {
             <li className="nav-item">
               <Link to="/add-tax" className="nav-link">
                 Tax
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/" className="nav-link">
+                Create Invoice
               </Link>
             </li>
           </ul>
