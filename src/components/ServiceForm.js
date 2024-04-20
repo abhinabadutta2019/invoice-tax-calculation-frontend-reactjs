@@ -57,6 +57,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
     try {
       const updatedInvoice = await addServiceToInvoice(_id, service);
       setServices([...updatedInvoice.services]);
+      alert("Service added successfully!");
 
       // Fetch and update the latest invoice data
       if (_id && _id !== "null") {
@@ -72,6 +73,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       setTaxId("");
     } catch (error) {
       console.error("Error adding service:", error);
+      alert(`Error adding service: ${error.message}`);
     }
   };
 
@@ -80,8 +82,10 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       const updatedInvoice = await removeServiceFromInvoice(_id, serviceId);
       setInvoiceServices(updatedInvoice.services);
       fetchInvoice();
+      alert("Service removed successfully!");
     } catch (error) {
       console.error("Error removing service:", error);
+      alert(`Error removing service: ${error.message}`);
     }
   };
 
