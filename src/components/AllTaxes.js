@@ -33,9 +33,9 @@ const AllTaxes = ({ onNewTaxAdded }) => {
   };
 
   return (
-    <div>
-      <h6>All Taxes</h6>
-      <table>
+    <div className="container mt-5">
+      <h6 className="mb-4">All Taxes</h6>
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th>Tax Name</th>
@@ -51,7 +51,12 @@ const AllTaxes = ({ onNewTaxAdded }) => {
               <td>{tax.taxRate}%</td>
               <td>{tax.disabled ? "Disabled" : "Enabled"}</td>
               <td>
-                <button onClick={() => handleToggleTax(tax._id)}>
+                <button
+                  className={`btn ${
+                    tax.disabled ? "btn-success" : "btn-danger"
+                  }`}
+                  onClick={() => handleToggleTax(tax._id)}
+                >
                   {tax.disabled ? "Enable" : "Disable"}
                 </button>
               </td>

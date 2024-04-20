@@ -34,24 +34,32 @@ const TaxCreate = () => {
   };
 
   return (
-    <div>
-      <h6>Add Tax</h6>
+    <div className="container mt-5">
+      <h6 className="mb-4">Add Tax</h6>
 
       <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Tax Name"
-          value={taxName}
-          onChange={(e) => setTaxName(e.target.value)}
-          required
-        />
-        <input
-          placeholder="Tax Rate (%)"
-          type="number"
-          value={taxRate}
-          onChange={(e) => setTaxRate(e.target.value)}
-          required
-        />
-        <button type="submit">Add Tax</button>
+        <div className="mb-3">
+          <input
+            className="form-control"
+            placeholder="Tax Name"
+            value={taxName}
+            onChange={(e) => setTaxName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            className="form-control"
+            placeholder="Tax Rate (%)"
+            type="number"
+            value={taxRate}
+            onChange={(e) => setTaxRate(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Add Tax
+        </button>
       </form>
 
       {/* Display all taxes */}

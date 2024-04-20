@@ -44,13 +44,13 @@ const InvoiceList = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="container mt-5">Loading...</div>;
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       <h6>All Invoices</h6>
-      <table>
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th>Invoice Number</th>
@@ -70,13 +70,19 @@ const InvoiceList = () => {
               <td>${invoice.totalTaxAmount.toFixed(2)}</td>
               <td>${invoice.totalAmount.toFixed(2)}</td>
               <td>
-                <button onClick={() => handleEditInvoice(invoice._id)}>
+                <button
+                  className="btn btn-primary me-2"
+                  onClick={() => handleEditInvoice(invoice._id)}
+                >
                   Edit / Details
                 </button>
-                <button onClick={() => handleDeleteInvoice(invoice._id)}>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteInvoice(invoice._id)}
+                >
                   Delete
                 </button>
-                {/* <button>View</button> */}
+                {/* <button className="btn btn-info">View</button> */}
               </td>
             </tr>
           ))}
