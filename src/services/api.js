@@ -13,6 +13,17 @@ export const addInvoice = async (invoice) => {
   }
 };
 
+export const deleteInvoice = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/invoice/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
 export const addServiceToInvoice = async (_id, service) => {
   try {
     const response = await axios.post(
@@ -76,6 +87,17 @@ export const updateInvoice = async (id, invoice) => {
 export const getInvoice = async (_id) => {
   try {
     const response = await axios.get(`${BASE_URL}/invoice/${_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+
+export const getAllInvoices = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/invoice/`);
     return response.data;
   } catch (error) {
     throw new Error(

@@ -9,7 +9,10 @@ const Navbar = () => {
           <Link to="/">Create Invoice</Link>
         </li>
         <li>
-          <Link to="/add-tax">Add Tax</Link>
+          <Link to="/all-invoice">Invoice List</Link>
+        </li>
+        <li>
+          <Link to="/add-tax">Tax</Link>
         </li>
       </ul>
     </nav>
