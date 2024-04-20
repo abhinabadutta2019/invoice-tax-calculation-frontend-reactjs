@@ -269,11 +269,26 @@ const InvoiceCreate = () => {
         />
 
         {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
-        <div>
+        <div className="mt-4">
           <h6>Invoice Totals</h6>
-          <p>Total Amount: ${totalAmount}</p>
-          <p>Total Tax Amount: ${totalTaxAmount}</p>
-          <p>Total Discount Amount: ${totalDiscountAmount}</p>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td style={{ textAlign: "right", fontWeight: "bold" }}>
+                  Total Amount:
+                </td>
+                <td style={{ fontWeight: "bold" }}>${totalAmount}</td>
+              </tr>
+              <tr>
+                <td style={{ textAlign: "right" }}>Total Tax Amount:</td>
+                <td>${totalTaxAmount}</td>
+              </tr>
+              <tr>
+                <td style={{ textAlign: "right" }}>Total Discount Amount:</td>
+                <td>${totalDiscountAmount}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         {/* Start Fresh Button */}

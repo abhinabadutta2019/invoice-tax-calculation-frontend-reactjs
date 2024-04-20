@@ -42,6 +42,11 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
   const handleSubmitService = async (e) => {
     e.preventDefault();
 
+    if (discountPercentage > 100 || discountPercentage < 0) {
+      alert("Discount Percentage should be between 0 and 100");
+      return;
+    }
+
     const service = {
       serviceType,
       sellingPrice: parseFloat(sellingPrice),

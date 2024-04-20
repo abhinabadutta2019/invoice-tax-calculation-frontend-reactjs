@@ -93,12 +93,12 @@ const InvoiceList = () => {
                   >
                     Download PDF
                   </button>
-                  <button
+                  {/* <button
                     className="btn btn-danger"
                     onClick={() => handleDeleteInvoice(invoice._id)}
                   >
                     Delete
-                  </button>
+                  </button> */}
                   {/* <button className="btn btn-info">View</button> */}
                 </td>
               </tr>
