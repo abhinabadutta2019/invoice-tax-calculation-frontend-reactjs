@@ -96,24 +96,30 @@ const InvoiceEdit = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <h6>Edit Invoice</h6>
 
       <form id="invoiceForm" onSubmit={handleCreateOrUpdateInvoice}>
-        <div className="form-group">
-          <label htmlFor="invoiceNumber">Invoice Number:</label>
+        <div className="mb-3">
+          <label htmlFor="invoiceNumber" className="form-label">
+            Invoice Number:
+          </label>
           <input
             id="invoiceNumber"
+            className="form-control"
             placeholder="Invoice Number"
             value={invoiceNumber}
             onChange={(e) => setInvoiceNumber(e.target.value)}
             disabled
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="customerName">Customer Name:</label>
+        <div className="mb-3">
+          <label htmlFor="customerName" className="form-label">
+            Customer Name:
+          </label>
           <input
             id="customerName"
+            className="form-control"
             placeholder="Customer Name"
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
@@ -124,11 +130,13 @@ const InvoiceEdit = () => {
             <p className="error">{errors.customerName}</p>
           )}
         </div>
-        <div className="form-group">
-          <label htmlFor="invoiceDate">Invoice Date:</label>
+        <div className="mb-3">
+          <label htmlFor="invoiceDate" className="form-label">
+            Invoice Date:
+          </label>
           <input
             id="invoiceDate"
-            placeholder="Invoice Date"
+            className="form-control"
             type="date"
             value={invoiceDate}
             onChange={(e) => setInvoiceDate(e.target.value)}
@@ -137,11 +145,13 @@ const InvoiceEdit = () => {
           />
           {errors.invoiceDate && <p className="error">{errors.invoiceDate}</p>}
         </div>
-        <div className="form-group">
-          <label htmlFor="dueDate">Due Date:</label>
+        <div className="mb-3">
+          <label htmlFor="dueDate" className="form-label">
+            Due Date:
+          </label>
           <input
             id="dueDate"
-            placeholder="Due Date"
+            className="form-control"
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
@@ -150,10 +160,13 @@ const InvoiceEdit = () => {
           />
           {errors.dueDate && <p className="error">{errors.dueDate}</p>}
         </div>
-        <div className="form-group">
-          <label htmlFor="paymentMethod">Payment Method:</label>
+        <div className="mb-3">
+          <label htmlFor="paymentMethod" className="form-label">
+            Payment Method:
+          </label>
           <select
             id="paymentMethod"
+            className="form-control"
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
             required
@@ -171,22 +184,21 @@ const InvoiceEdit = () => {
           )}
         </div>
 
-        {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
         {isEditMode ? (
           <>
-            {/* <button type="button" onClick={() => setIsEditMode(false)}>
-              View Invoice
-            </button> */}
-            <button type="submit" form="invoiceForm">
+            <button type="submit" className="btn btn-primary me-2">
               Update Invoice
             </button>
           </>
         ) : (
-          <button type="button" onClick={() => setIsEditMode(true)}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setIsEditMode(true)}
+          >
             Edit Invoice
           </button>
         )}
-        {/* </div> */}
       </form>
 
       {/* Service component */}
@@ -197,7 +209,7 @@ const InvoiceEdit = () => {
       />
 
       {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
-      <div>
+      <div className="mt-4">
         <h6>Invoice Totals</h6>
         <p>Total Amount: ${totalAmount}</p>
         <p>Total Tax Amount: ${totalTaxAmount}</p>
@@ -207,8 +219,8 @@ const InvoiceEdit = () => {
       {/* Start Fresh Button */}
       <button
         type="button"
+        className="btn btn-danger mt-4"
         onClick={handleClearInvoice}
-        style={{ marginTop: "20px" }}
       >
         Finish and Back to Invoice List
       </button>
