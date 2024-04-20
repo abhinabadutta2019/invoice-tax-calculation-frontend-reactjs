@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { updateInvoice, getInvoice } from "../services/api";
 import ServiceForm from "./ServiceForm";
 import Footer from "../shared/Footer";
+import FooterTwo from "../shared/FooterTwo";
 
 const InvoiceEdit = () => {
   const { id } = useParams();
@@ -251,7 +252,7 @@ const InvoiceEdit = () => {
         </button>
       </div>
 
-      <Footer />
+      <FooterTwo />
     </>
   );
 };

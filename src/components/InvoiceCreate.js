@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { addInvoice, updateInvoice, getInvoice } from "../services/api";
 import ServiceForm from "./ServiceForm";
 import Footer from "../shared/Footer";
+import FooterTwo from "../shared/FooterTwo";
 
 const InvoiceCreate = () => {
   const [customerName, setCustomerName] = useState("");
@@ -302,7 +303,7 @@ const InvoiceCreate = () => {
         </button>
       </div>
 
-      <Footer />
+      <FooterTwo />
     </>
   );
 };
