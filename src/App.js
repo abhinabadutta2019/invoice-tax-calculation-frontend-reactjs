@@ -10,12 +10,14 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<InvoiceCreate />} />
-        <Route path="/all-invoice" element={<InvoiceList />} />
-        <Route path="/add-tax" element={<TaxCreate />} />
-        <Route path="/edit-invoice/:id" element={<InvoiceEdit />} />
-      </Routes>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<InvoiceCreate />} />
+          <Route path="/all-invoice" element={<InvoiceList />} />
+          <Route path="/add-tax" element={<TaxCreate />} />
+          <Route path="/edit-invoice/:id" element={<InvoiceEdit />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
