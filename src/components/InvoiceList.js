@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllInvoices, deleteInvoice } from "../services/api";
+import { downloadInvoicePdf } from "../services/api"; // Import the downloadInvoicePdf function
 
 const InvoiceList = () => {
   const [invoices, setInvoices] = useState([]);
@@ -43,6 +44,14 @@ const InvoiceList = () => {
     navigate(`/edit-invoice/${id}`);
   };
 
+  const handleDownloadInvoice = async (id) => {
+    try {
+      await downloadInvoicePdf(id); // Call the downloadInvoicePdf function
+    } catch (error) {
+      console.error("Error downloading invoice:", error);
+    }
+  };
+
   if (loading) {
     return <div className="container mt-5">Loading...</div>;
   }
@@ -75,6 +84,12 @@ const InvoiceList = () => {
                   onClick={() => handleEditInvoice(invoice._id)}
                 >
                   Edit / Details
+                </button>
+                <button
+                  className="btn btn-success me-2" // Added success class
+                  onClick={() => handleDownloadInvoice(invoice._id)} // Added handleDownloadInvoice function
+                >
+                  Download PDF
                 </button>
                 <button
                   className="btn btn-danger"

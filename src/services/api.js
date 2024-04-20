@@ -2,6 +2,28 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:3012";
 
+//
+export const downloadInvoicePdf = async (id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/invoice/download/${id}`, {
+      responseType: "blob", // Important
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `invoice_${id}.pdf`); // Filename
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  } catch (error) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
+//
+
 export const addInvoice = async (invoice) => {
   try {
     const response = await axios.post(`${BASE_URL}/invoice/`, invoice);
