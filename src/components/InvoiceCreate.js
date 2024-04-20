@@ -70,9 +70,10 @@ const InvoiceCreate = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleCreateInvoice = async () => {
+  const handleCreateInvoice = async (e) => {
+    e.preventDefault();
+
     if (!validateForm()) {
-      alert("Please fill in all required fields.");
       return;
     }
 
@@ -96,9 +97,10 @@ const InvoiceCreate = () => {
     }
   };
 
-  const handleUpdateInvoice = async () => {
+  const handleUpdateInvoice = async (e) => {
+    e.preventDefault();
+
     if (!validateForm()) {
-      alert("Please fill in all required fields.");
       return;
     }
 
@@ -143,58 +145,90 @@ const InvoiceCreate = () => {
     <div>
       <h6>Create Invoice</h6>
 
-      <form>
-        <input
-          placeholder="Invoice Number"
-          value={invoiceNumber}
-          onChange={(e) => setInvoiceNumber(e.target.value)}
-          disabled
-        />
-        <input
-          placeholder="Customer Name"
-          value={customerName}
-          onChange={(e) => setCustomerName(e.target.value)}
-          disabled={!isEditMode}
-          required
-        />
-        <input
-          placeholder="Invoice Date"
-          type="date"
-          value={invoiceDate}
-          onChange={(e) => setInvoiceDate(e.target.value)}
-          disabled={!isEditMode}
-          required
-        />
-        <input
-          placeholder="Due Date"
-          type="date"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-          disabled={!isEditMode}
-          required
-        />
-        <select
-          value={paymentMethod}
-          onChange={(e) => setPaymentMethod(e.target.value)}
-          disabled={!isEditMode}
-          required
-        >
-          <option value="">Select Payment Method</option>
-          <option value="Cash">Cash</option>
-          <option value="Credit Card">Credit Card</option>
-          <option value="Debit Card">Debit Card</option>
-          <option value="Bank Transfer">Bank Transfer</option>
-          <option value="Other">Other</option>
-        </select>
+      <form
+        onSubmit={
+          localStorage.getItem("_id")
+            ? handleUpdateInvoice
+            : handleCreateInvoice
+        }
+      >
+        <div className="form-group">
+          <label htmlFor="invoiceNumber">Invoice Number:</label>
+          <input
+            id="invoiceNumber"
+            placeholder="Invoice Number"
+            value={invoiceNumber}
+            onChange={(e) => setInvoiceNumber(e.target.value)}
+            disabled
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="customerName">Customer Name:</label>
+          <input
+            id="customerName"
+            placeholder="Customer Name"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            disabled={!isEditMode}
+            required
+          />
+          {errors.customerName && (
+            <p className="error">{errors.customerName}</p>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="invoiceDate">Invoice Date:</label>
+          <input
+            id="invoiceDate"
+            placeholder="Invoice Date"
+            type="date"
+            value={invoiceDate}
+            onChange={(e) => setInvoiceDate(e.target.value)}
+            disabled={!isEditMode}
+            required
+          />
+          {errors.invoiceDate && <p className="error">{errors.invoiceDate}</p>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="dueDate">Due Date:</label>
+          <input
+            id="dueDate"
+            placeholder="Due Date"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            disabled={!isEditMode}
+            required
+          />
+          {errors.dueDate && <p className="error">{errors.dueDate}</p>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="paymentMethod">Payment Method:</label>
+          <select
+            id="paymentMethod"
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            disabled={!isEditMode}
+            required
+          >
+            <option value="">Select Payment Method</option>
+            <option value="Cash">Cash</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Other">Other</option>
+          </select>
+          {errors.paymentMethod && (
+            <p className="error">{errors.paymentMethod}</p>
+          )}
+        </div>
 
         {localStorage.getItem("_id") ? (
-          <button type="button" onClick={handleUpdateInvoice}>
+          <button type="submit" disabled={isEditMode ? false : true}>
             Update Invoice
           </button>
         ) : (
-          <button type="button" onClick={handleCreateInvoice}>
-            Add Task to Invoice
-          </button>
+          <button type="submit">Add Task to Invoice</button>
         )}
         {!isEditMode && (
           <button type="button" onClick={handleEdit}>
@@ -224,7 +258,7 @@ const InvoiceCreate = () => {
         onClick={handleClearInvoice}
         style={{ marginTop: "20px" }}
       >
-        Fininsh and Start Fresh
+        Finish and Start Fresh
       </button>
     </div>
   );

@@ -89,22 +89,34 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       {invoiceServices.length > 0 && (
         <>
           <h6>Services in Invoice</h6>
-          <ul>
-            {invoiceServices.map((service, index) => (
-              <li key={index}>
-                <span>{service.serviceType}</span>- -
-                <span>Discount- {service.discountPercentage}%</span>-{" "}
-                <span>
-                  Discount Amount - ${service.discountAmount.toFixed(2)}
-                </span>
-                -<span>Tax Amount - ${service.taxAmount.toFixed(2)}</span> -
-                <span>Selling Price - ${service.finalPrice.toFixed(2)}</span>
-                <button onClick={() => handleRemoveService(service._id)}>
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
+          <table>
+            <thead>
+              <tr>
+                <th>Service Type</th>
+                <th>Discount Percentage</th>
+                <th>Discount Amount</th>
+                <th>Tax Amount</th>
+                <th>Selling Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoiceServices.map((service, index) => (
+                <tr key={index}>
+                  <td>{service.serviceType}</td>
+                  <td>{service.discountPercentage}%</td>
+                  <td>${service.discountAmount.toFixed(2)}</td>
+                  <td>${service.taxAmount.toFixed(2)}</td>
+                  <td>${service.finalPrice.toFixed(2)}</td>
+                  <td>
+                    <button onClick={() => handleRemoveService(service._id)}>
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </>
       )}
 
@@ -115,39 +127,55 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       <h6>Add Services to Invoice</h6>
 
       <form onSubmit={handleSubmitService}>
-        <input
-          placeholder="Service Type"
-          value={serviceType}
-          onChange={(e) => setServiceType(e.target.value)}
-          required
-        />
-        <input
-          placeholder="Selling Price"
-          type="number"
-          value={sellingPrice}
-          onChange={(e) => setSellingPrice(e.target.value)}
-          required
-        />
-        <input
-          placeholder="Discount Percentage"
-          type="number"
-          value={discountPercentage}
-          onChange={(e) => setDiscountPercentage(e.target.value)}
-          required
-        />
-        <select
-          placeholder="Tax"
-          value={taxId}
-          onChange={(e) => setTaxId(e.target.value)}
-          required
-        >
-          <option value="">Select Tax</option>
-          {taxes.map((tax, index) => (
-            <option key={index} value={tax._id}>
-              {tax.taxName} - {tax.taxRate}%
-            </option>
-          ))}
-        </select>
+        <div className="form-group">
+          <label htmlFor="serviceType">Service Type:</label>
+          <input
+            id="serviceType"
+            placeholder="Service Type"
+            value={serviceType}
+            onChange={(e) => setServiceType(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="sellingPrice">Selling Price:</label>
+          <input
+            id="sellingPrice"
+            placeholder="Selling Price"
+            type="number"
+            value={sellingPrice}
+            onChange={(e) => setSellingPrice(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="discountPercentage">Discount Percentage:</label>
+          <input
+            id="discountPercentage"
+            placeholder="Discount Percentage"
+            type="number"
+            value={discountPercentage}
+            onChange={(e) => setDiscountPercentage(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="taxId">Tax:</label>
+          <select
+            id="taxId"
+            placeholder="Tax"
+            value={taxId}
+            onChange={(e) => setTaxId(e.target.value)}
+            required
+          >
+            <option value="">Select Tax</option>
+            {taxes.map((tax, index) => (
+              <option key={index} value={tax._id}>
+                {tax.taxName} - {tax.taxRate}%
+              </option>
+            ))}
+          </select>
+        </div>
         <button type="submit">Add Service</button>
       </form>
     </div>
