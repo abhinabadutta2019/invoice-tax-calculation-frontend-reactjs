@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { addTax } from "../services/api";
+import AllTaxes from "./AllTaxes"; // Import the AllTaxes component
 
 const TaxCreate = () => {
   const [taxName, setTaxName] = useState("");
@@ -42,6 +43,9 @@ const TaxCreate = () => {
         />
         <button type="submit">Add Tax</button>
       </form>
+
+      {/* Display all taxes */}
+      <AllTaxes />
     </div>
   );
 };

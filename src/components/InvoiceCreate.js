@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { addInvoice, updateInvoice } from "../services/api";
+import { addInvoice, updateInvoice, getInvoice } from "../services/api";
 import ServiceForm from "./ServiceForm";
 
 const InvoiceCreate = () => {
@@ -14,15 +13,14 @@ const InvoiceCreate = () => {
   const [isEditMode, setIsEditMode] = useState(true);
   const [totalTaxAmount, setTotalTaxAmount] = useState(0);
   const [totalDiscountAmount, setTotalDiscountAmount] = useState(0);
+  const [errors, setErrors] = useState({});
 
   const fetchInvoice = async () => {
     try {
       const savedId = localStorage.getItem("_id");
       if (savedId && savedId !== "null") {
-        const response = await axios.get(
-          `http://localhost:3012/invoice/${savedId}`
-        );
-        const invoice = response.data;
+        const response = await getInvoice(savedId);
+        const invoice = response;
         setInvoiceNumber(invoice.invoiceNumber);
         setCustomerName(invoice.customerName);
         setInvoiceDate(invoice.invoiceDate.slice(0, 10));
@@ -49,7 +47,35 @@ const InvoiceCreate = () => {
     setIsEditMode(true);
   };
 
+  const validateForm = () => {
+    const errors = {};
+
+    if (!customerName) {
+      errors.customerName = "Customer Name is required";
+    }
+
+    if (!invoiceDate) {
+      errors.invoiceDate = "Invoice Date is required";
+    }
+
+    if (!dueDate) {
+      errors.dueDate = "Due Date is required";
+    }
+
+    if (!paymentMethod) {
+      errors.paymentMethod = "Payment Method is required";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleCreateInvoice = async () => {
+    if (!validateForm()) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     try {
       const invoice = {
         customerName,
@@ -70,8 +96,12 @@ const InvoiceCreate = () => {
     }
   };
 
-  const handleUpdateInvoice = async (e) => {
-    e.preventDefault();
+  const handleUpdateInvoice = async () => {
+    if (!validateForm()) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     try {
       const invoice = {
         customerName,
@@ -92,6 +122,21 @@ const InvoiceCreate = () => {
     } catch (error) {
       console.error("Error updating invoice:", error);
     }
+  };
+
+  const handleClearInvoice = () => {
+    localStorage.removeItem("_id");
+    setCustomerName("");
+    setInvoiceDate("");
+    setDueDate("");
+    setInvoiceNumber("");
+    setPaymentMethod("");
+    setServices([]);
+    setTotalAmount(0);
+    setTotalTaxAmount(0);
+    setTotalDiscountAmount(0);
+    setIsEditMode(true);
+    setErrors({});
   };
 
   return (
@@ -141,29 +186,9 @@ const InvoiceCreate = () => {
           <option value="Bank Transfer">Bank Transfer</option>
           <option value="Other">Other</option>
         </select>
-        {/* <input
-          placeholder="Total Amount"
-          type="number"
-          value={totalAmount}
-          onChange={(e) => setTotalAmount(e.target.value)}
-          disabled
-        />
-        <input
-          placeholder="Total Tax Amount"
-          type="number"
-          value={totalTaxAmount}
-          onChange={(e) => setTotalTaxAmount(e.target.value)}
-          disabled
-        />
-        <input
-          placeholder="Total Discount Amount"
-          type="number"
-          value={totalDiscountAmount}
-          onChange={(e) => setTotalDiscountAmount(e.target.value)}
-          disabled
-        /> */}
+
         {localStorage.getItem("_id") ? (
-          <button type="submit" onClick={handleUpdateInvoice}>
+          <button type="button" onClick={handleUpdateInvoice}>
             Update Invoice
           </button>
         ) : (
@@ -192,6 +217,15 @@ const InvoiceCreate = () => {
         <p>Total Tax Amount: ${totalTaxAmount}</p>
         <p>Total Discount Amount: ${totalDiscountAmount}</p>
       </div>
+
+      {/* Start Fresh Button */}
+      <button
+        type="button"
+        onClick={handleClearInvoice}
+        style={{ marginTop: "20px" }}
+      >
+        Fininsh and Start Fresh
+      </button>
     </div>
   );
 };
