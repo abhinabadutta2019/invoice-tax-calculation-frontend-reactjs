@@ -91,9 +91,9 @@ const InvoiceEdit = () => {
     }
   };
 
-  //   const handleClearInvoice = () => {
-  //     navigate("/all-invoice");
-  //   };
+  const handleClearInvoice = () => {
+    navigate("/all-invoice");
+  };
 
   return (
     <div>
@@ -205,13 +205,13 @@ const InvoiceEdit = () => {
       </div>
 
       {/* Start Fresh Button */}
-      {/* <button
+      <button
         type="button"
         onClick={handleClearInvoice}
         style={{ marginTop: "20px" }}
       >
-        Finish and Back to Invoices
-      </button> */}
+        Finish and Back to Invoice List
+      </button>
     </div>
   );
 };

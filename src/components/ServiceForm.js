@@ -29,7 +29,7 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
     const fetchTaxes = async () => {
       try {
         const taxesData = await getAllTaxes();
-        setTaxes(taxesData);
+        setTaxes(taxesData.filter((tax) => !tax.disabled)); // Filter out disabled taxes
       } catch (error) {
         console.error("Error fetching taxes:", error);
       }
