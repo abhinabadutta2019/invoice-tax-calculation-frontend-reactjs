@@ -1,10 +1,11 @@
-// components/InvoiceList.js
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllInvoices, deleteInvoice } from "../services/api";
 
 const InvoiceList = () => {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -38,6 +39,10 @@ const InvoiceList = () => {
     }
   };
 
+  const handleEditInvoice = (id) => {
+    navigate(`/edit-invoice/${id}`);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -65,11 +70,13 @@ const InvoiceList = () => {
               <td>${invoice.totalTaxAmount.toFixed(2)}</td>
               <td>${invoice.totalAmount.toFixed(2)}</td>
               <td>
+                <button onClick={() => handleEditInvoice(invoice._id)}>
+                  Edit / Details
+                </button>
                 <button onClick={() => handleDeleteInvoice(invoice._id)}>
                   Delete
                 </button>
-                <button>View</button>
-                {/* You can add more actions like Edit here */}
+                {/* <button>View</button> */}
               </td>
             </tr>
           ))}
