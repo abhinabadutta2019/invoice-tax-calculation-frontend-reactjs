@@ -6,7 +6,7 @@ import {
   getAllTaxes,
 } from "../services/api";
 
-const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
+const ServiceForm = ({ _id, setServices, fetchInvoice, isEditMode }) => {
   const [serviceType, setServiceType] = useState("");
   const [sellingPrice, setSellingPrice] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -85,11 +85,11 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       {invoiceServices.length > 0 && (
         <>
           <h6>Services in Invoice</h6>
-          <table>
+          <table className="table table-bordered">
             <thead>
               <tr>
                 <th>Service Type</th>
@@ -109,7 +109,10 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
                   <td>${service.taxAmount.toFixed(2)}</td>
                   <td>${service.finalPrice.toFixed(2)}</td>
                   <td>
-                    <button onClick={() => handleRemoveService(service._id)}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleRemoveService(service._id)}
+                    >
                       Remove
                     </button>
                   </td>
@@ -127,20 +130,26 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
       <h6>Add Services to Invoice</h6>
 
       <form onSubmit={handleSubmitService}>
-        <div className="form-group">
-          <label htmlFor="serviceType">Service Type:</label>
+        <div className="mb-3">
+          <label htmlFor="serviceType" className="form-label">
+            Service Type:
+          </label>
           <input
             id="serviceType"
+            className="form-control"
             placeholder="Service Type"
             value={serviceType}
             onChange={(e) => setServiceType(e.target.value)}
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="sellingPrice">Selling Price:</label>
+        <div className="mb-3">
+          <label htmlFor="sellingPrice" className="form-label">
+            Selling Price:
+          </label>
           <input
             id="sellingPrice"
+            className="form-control"
             placeholder="Selling Price"
             type="number"
             value={sellingPrice}
@@ -148,10 +157,13 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="discountPercentage">Discount Percentage:</label>
+        <div className="mb-3">
+          <label htmlFor="discountPercentage" className="form-label">
+            Discount Percentage:
+          </label>
           <input
             id="discountPercentage"
+            className="form-control"
             placeholder="Discount Percentage"
             type="number"
             value={discountPercentage}
@@ -159,10 +171,13 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="taxId">Tax:</label>
+        <div className="mb-3">
+          <label htmlFor="taxId" className="form-label">
+            Tax:
+          </label>
           <select
             id="taxId"
+            className="form-select"
             placeholder="Tax"
             value={taxId}
             onChange={(e) => setTaxId(e.target.value)}
@@ -176,7 +191,13 @@ const ServiceForm = ({ _id, setServices, fetchInvoice }) => {
             ))}
           </select>
         </div>
-        <button type="submit">Add Service</button>
+        <button
+          type="submit"
+          className={`btn btn-primary ${isEditMode ? "" : "disabled"}`}
+          disabled={!isEditMode}
+        >
+          Add Service
+        </button>
       </form>
     </div>
   );

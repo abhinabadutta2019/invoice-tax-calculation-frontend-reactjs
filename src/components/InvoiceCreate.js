@@ -142,7 +142,7 @@ const InvoiceCreate = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h6>Create Invoice</h6>
 
       <form
@@ -152,20 +152,26 @@ const InvoiceCreate = () => {
             : handleCreateInvoice
         }
       >
-        <div className="form-group">
-          <label htmlFor="invoiceNumber">Invoice Number:</label>
+        <div className="mb-3">
+          <label htmlFor="invoiceNumber" className="form-label">
+            Invoice Number:
+          </label>
           <input
             id="invoiceNumber"
+            className="form-control"
             placeholder="Invoice Number"
             value={invoiceNumber}
             onChange={(e) => setInvoiceNumber(e.target.value)}
             disabled
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="customerName">Customer Name:</label>
+        <div className="mb-3">
+          <label htmlFor="customerName" className="form-label">
+            Customer Name:
+          </label>
           <input
             id="customerName"
+            className="form-control"
             placeholder="Customer Name"
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
@@ -176,10 +182,13 @@ const InvoiceCreate = () => {
             <p className="error">{errors.customerName}</p>
           )}
         </div>
-        <div className="form-group">
-          <label htmlFor="invoiceDate">Invoice Date:</label>
+        <div className="mb-3">
+          <label htmlFor="invoiceDate" className="form-label">
+            Invoice Date:
+          </label>
           <input
             id="invoiceDate"
+            className="form-control"
             placeholder="Invoice Date"
             type="date"
             value={invoiceDate}
@@ -189,10 +198,13 @@ const InvoiceCreate = () => {
           />
           {errors.invoiceDate && <p className="error">{errors.invoiceDate}</p>}
         </div>
-        <div className="form-group">
-          <label htmlFor="dueDate">Due Date:</label>
+        <div className="mb-3">
+          <label htmlFor="dueDate" className="form-label">
+            Due Date:
+          </label>
           <input
             id="dueDate"
+            className="form-control"
             placeholder="Due Date"
             type="date"
             value={dueDate}
@@ -202,10 +214,13 @@ const InvoiceCreate = () => {
           />
           {errors.dueDate && <p className="error">{errors.dueDate}</p>}
         </div>
-        <div className="form-group">
-          <label htmlFor="paymentMethod">Payment Method:</label>
+        <div className="mb-3">
+          <label htmlFor="paymentMethod" className="form-label">
+            Payment Method:
+          </label>
           <select
             id="paymentMethod"
+            className="form-select"
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
             disabled={!isEditMode}
@@ -224,14 +239,24 @@ const InvoiceCreate = () => {
         </div>
 
         {localStorage.getItem("_id") ? (
-          <button type="submit" disabled={isEditMode ? false : true}>
+          <button
+            type="submit"
+            className={`btn btn-primary ${isEditMode ? "" : "disabled"}`}
+            disabled={!isEditMode}
+          >
             Update Invoice
           </button>
         ) : (
-          <button type="submit">Add Task to Invoice</button>
+          <button type="submit" className="btn btn-primary">
+            Add Task to Invoice
+          </button>
         )}
         {!isEditMode && (
-          <button type="button" onClick={handleEdit}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleEdit}
+          >
             Edit Invoice
           </button>
         )}
@@ -242,6 +267,7 @@ const InvoiceCreate = () => {
         _id={localStorage.getItem("_id")}
         setServices={setServices}
         fetchInvoice={fetchInvoice}
+        isEditMode={isEditMode}
       />
 
       {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
@@ -255,6 +281,7 @@ const InvoiceCreate = () => {
       {/* Start Fresh Button */}
       <button
         type="button"
+        className="btn btn-danger"
         onClick={handleClearInvoice}
         style={{ marginTop: "20px" }}
       >
