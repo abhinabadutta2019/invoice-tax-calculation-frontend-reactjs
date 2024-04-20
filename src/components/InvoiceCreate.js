@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { addInvoice, updateInvoice, getInvoice } from "../services/api";
 import ServiceForm from "./ServiceForm";
+import Footer from "../shared/Footer";
 
 const InvoiceCreate = () => {
   const [customerName, setCustomerName] = useState("");
@@ -142,146 +143,152 @@ const InvoiceCreate = () => {
   };
 
   return (
-    <div className="container">
-      <h6>Create Invoice</h6>
+    <>
+      <div className="container mt-5 pb-4">
+        <h6>Create Invoice</h6>
 
-      <form
-        onSubmit={
-          localStorage.getItem("_id")
-            ? handleUpdateInvoice
-            : handleCreateInvoice
-        }
-      >
-        <div className="mb-3">
-          <label htmlFor="invoiceNumber" className="form-label">
-            Invoice Number:
-          </label>
-          <input
-            id="invoiceNumber"
-            className="form-control"
-            placeholder="Invoice Number"
-            value={invoiceNumber}
-            onChange={(e) => setInvoiceNumber(e.target.value)}
-            disabled
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="customerName" className="form-label">
-            Customer Name:
-          </label>
-          <input
-            id="customerName"
-            className="form-control"
-            placeholder="Customer Name"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            disabled={!isEditMode}
-            required
-          />
-          {errors.customerName && (
-            <p className="error">{errors.customerName}</p>
+        <form
+          onSubmit={
+            localStorage.getItem("_id")
+              ? handleUpdateInvoice
+              : handleCreateInvoice
+          }
+        >
+          <div className="mb-3">
+            <label htmlFor="invoiceNumber" className="form-label">
+              Invoice Number:
+            </label>
+            <input
+              id="invoiceNumber"
+              className="form-control"
+              placeholder="Invoice Number"
+              value={invoiceNumber}
+              onChange={(e) => setInvoiceNumber(e.target.value)}
+              disabled
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="customerName" className="form-label">
+              Customer Name:
+            </label>
+            <input
+              id="customerName"
+              className="form-control"
+              placeholder="Customer Name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              disabled={!isEditMode}
+              required
+            />
+            {errors.customerName && (
+              <p className="error">{errors.customerName}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="invoiceDate" className="form-label">
+              Invoice Date:
+            </label>
+            <input
+              id="invoiceDate"
+              className="form-control"
+              placeholder="Invoice Date"
+              type="date"
+              value={invoiceDate}
+              onChange={(e) => setInvoiceDate(e.target.value)}
+              disabled={!isEditMode}
+              required
+            />
+            {errors.invoiceDate && (
+              <p className="error">{errors.invoiceDate}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="dueDate" className="form-label">
+              Due Date:
+            </label>
+            <input
+              id="dueDate"
+              className="form-control"
+              placeholder="Due Date"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              disabled={!isEditMode}
+              required
+            />
+            {errors.dueDate && <p className="error">{errors.dueDate}</p>}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="paymentMethod" className="form-label">
+              Payment Method:
+            </label>
+            <select
+              id="paymentMethod"
+              className="form-select"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              disabled={!isEditMode}
+              required
+            >
+              <option value="">Select Payment Method</option>
+              <option value="Cash">Cash</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Other">Other</option>
+            </select>
+            {errors.paymentMethod && (
+              <p className="error">{errors.paymentMethod}</p>
+            )}
+          </div>
+
+          {isEditMode && (
+            <button type="submit" className="btn btn-primary">
+              {localStorage.getItem("_id")
+                ? "Update Invoice"
+                : "Add Task to Invoice"}
+            </button>
           )}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="invoiceDate" className="form-label">
-            Invoice Date:
-          </label>
-          <input
-            id="invoiceDate"
-            className="form-control"
-            placeholder="Invoice Date"
-            type="date"
-            value={invoiceDate}
-            onChange={(e) => setInvoiceDate(e.target.value)}
-            disabled={!isEditMode}
-            required
-          />
-          {errors.invoiceDate && <p className="error">{errors.invoiceDate}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="dueDate" className="form-label">
-            Due Date:
-          </label>
-          <input
-            id="dueDate"
-            className="form-control"
-            placeholder="Due Date"
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            disabled={!isEditMode}
-            required
-          />
-          {errors.dueDate && <p className="error">{errors.dueDate}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="paymentMethod" className="form-label">
-            Payment Method:
-          </label>
-          <select
-            id="paymentMethod"
-            className="form-select"
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            disabled={!isEditMode}
-            required
-          >
-            <option value="">Select Payment Method</option>
-            <option value="Cash">Cash</option>
-            <option value="Credit Card">Credit Card</option>
-            <option value="Debit Card">Debit Card</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="Other">Other</option>
-          </select>
-          {errors.paymentMethod && (
-            <p className="error">{errors.paymentMethod}</p>
+          {!isEditMode && (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleEdit}
+            >
+              Edit Invoice
+            </button>
           )}
+        </form>
+
+        {/* Service component */}
+        <ServiceForm
+          _id={localStorage.getItem("_id")}
+          setServices={setServices}
+          fetchInvoice={fetchInvoice}
+          isEditMode={isEditMode}
+        />
+
+        {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
+        <div>
+          <h6>Invoice Totals</h6>
+          <p>Total Amount: ${totalAmount}</p>
+          <p>Total Tax Amount: ${totalTaxAmount}</p>
+          <p>Total Discount Amount: ${totalDiscountAmount}</p>
         </div>
 
-        {isEditMode && (
-          <button type="submit" className="btn btn-primary">
-            {localStorage.getItem("_id")
-              ? "Update Invoice"
-              : "Add Task to Invoice"}
-          </button>
-        )}
-        {!isEditMode && (
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleEdit}
-          >
-            Edit Invoice
-          </button>
-        )}
-      </form>
-
-      {/* Service component */}
-      <ServiceForm
-        _id={localStorage.getItem("_id")}
-        setServices={setServices}
-        fetchInvoice={fetchInvoice}
-        isEditMode={isEditMode}
-      />
-
-      {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
-      <div>
-        <h6>Invoice Totals</h6>
-        <p>Total Amount: ${totalAmount}</p>
-        <p>Total Tax Amount: ${totalTaxAmount}</p>
-        <p>Total Discount Amount: ${totalDiscountAmount}</p>
+        {/* Start Fresh Button */}
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={handleClearInvoice}
+          style={{ marginTop: "20px" }}
+        >
+          Finish and Start Fresh
+        </button>
       </div>
 
-      {/* Start Fresh Button */}
-      <button
-        type="button"
-        className="btn btn-danger"
-        onClick={handleClearInvoice}
-        style={{ marginTop: "20px" }}
-      >
-        Finish and Start Fresh
-      </button>
-    </div>
+      <Footer />
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllInvoices, deleteInvoice } from "../services/api";
 import { downloadInvoicePdf } from "../services/api"; // Import the downloadInvoicePdf function
+import Footer from "../shared/Footer";
 
 const InvoiceList = () => {
   const [invoices, setInvoices] = useState([]);
@@ -57,53 +58,56 @@ const InvoiceList = () => {
   }
 
   return (
-    <div className="container mt-5">
-      <h6>All Invoices</h6>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Invoice Number</th>
-            <th>Customer Name</th>
-            <th>Tax</th>
-            <th>Discount</th>
-            <th>Total</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {invoices.map((invoice) => (
-            <tr key={invoice._id}>
-              <td>{invoice.invoiceNumber}</td>
-              <td>{invoice.customerName}</td>
-              <td>${invoice.totalDiscountAmount.toFixed(2)}</td>
-              <td>${invoice.totalTaxAmount.toFixed(2)}</td>
-              <td>${invoice.totalAmount.toFixed(2)}</td>
-              <td>
-                <button
-                  className="btn btn-primary me-2"
-                  onClick={() => handleEditInvoice(invoice._id)}
-                >
-                  Edit / Details
-                </button>
-                <button
-                  className="btn btn-success me-2" // Added success class
-                  onClick={() => handleDownloadInvoice(invoice._id)} // Added handleDownloadInvoice function
-                >
-                  Download PDF
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDeleteInvoice(invoice._id)}
-                >
-                  Delete
-                </button>
-                {/* <button className="btn btn-info">View</button> */}
-              </td>
+    <>
+      <div className="container mt-5">
+        <h6>All Invoices</h6>
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>Invoice Number</th>
+              <th>Customer Name</th>
+              <th>Tax</th>
+              <th>Discount</th>
+              <th>Total</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {invoices.map((invoice) => (
+              <tr key={invoice._id}>
+                <td>{invoice.invoiceNumber}</td>
+                <td>{invoice.customerName}</td>
+                <td>${invoice.totalDiscountAmount.toFixed(2)}</td>
+                <td>${invoice.totalTaxAmount.toFixed(2)}</td>
+                <td>${invoice.totalAmount.toFixed(2)}</td>
+                <td>
+                  <button
+                    className="btn btn-primary me-2"
+                    onClick={() => handleEditInvoice(invoice._id)}
+                  >
+                    Edit / Details
+                  </button>
+                  <button
+                    className="btn btn-success me-2" // Added success class
+                    onClick={() => handleDownloadInvoice(invoice._id)} // Added handleDownloadInvoice function
+                  >
+                    Download PDF
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteInvoice(invoice._id)}
+                  >
+                    Delete
+                  </button>
+                  {/* <button className="btn btn-info">View</button> */}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Footer />
+    </>
   );
 };
 

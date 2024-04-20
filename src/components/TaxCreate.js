@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addTax, getAllTaxes } from "../services/api";
 import AllTaxes from "./AllTaxes";
+import Footer from "../shared/Footer";
 
 const TaxCreate = () => {
   const [taxName, setTaxName] = useState("");
@@ -34,37 +35,40 @@ const TaxCreate = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h6 className="mb-4">Add Tax</h6>
+    <>
+      <div className="container mt-5 pb-4">
+        <h6 className="mb-4">Add Tax</h6>
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <input
-            className="form-control"
-            placeholder="Tax Name"
-            value={taxName}
-            onChange={(e) => setTaxName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            className="form-control"
-            placeholder="Tax Rate (%)"
-            type="number"
-            value={taxRate}
-            onChange={(e) => setTaxRate(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Add Tax
-        </button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              className="form-control"
+              placeholder="Tax Name"
+              value={taxName}
+              onChange={(e) => setTaxName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              className="form-control"
+              placeholder="Tax Rate (%)"
+              type="number"
+              value={taxRate}
+              onChange={(e) => setTaxRate(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Add Tax
+          </button>
+        </form>
 
-      {/* Display all taxes */}
-      <AllTaxes onNewTaxAdded={handleNewTaxAdded} />
-    </div>
+        {/* Display all taxes */}
+        <AllTaxes onNewTaxAdded={handleNewTaxAdded} />
+        <Footer />
+      </div>
+    </>
   );
 };
 

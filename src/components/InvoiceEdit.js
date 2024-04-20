@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { updateInvoice, getInvoice } from "../services/api";
 import ServiceForm from "./ServiceForm";
+import Footer from "../shared/Footer";
 
 const InvoiceEdit = () => {
   const { id } = useParams();
@@ -96,135 +97,141 @@ const InvoiceEdit = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h6>Edit Invoice</h6>
+    <>
+      <div className="container mt-5 pb-4">
+        <h6>Edit Invoice</h6>
 
-      <form id="invoiceForm" onSubmit={handleCreateOrUpdateInvoice}>
-        <div className="mb-3">
-          <label htmlFor="invoiceNumber" className="form-label">
-            Invoice Number:
-          </label>
-          <input
-            id="invoiceNumber"
-            className="form-control"
-            placeholder="Invoice Number"
-            value={invoiceNumber}
-            onChange={(e) => setInvoiceNumber(e.target.value)}
-            disabled
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="customerName" className="form-label">
-            Customer Name:
-          </label>
-          <input
-            id="customerName"
-            className="form-control"
-            placeholder="Customer Name"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            required
-            disabled={!isEditMode}
-          />
-          {errors.customerName && (
-            <p className="error">{errors.customerName}</p>
-          )}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="invoiceDate" className="form-label">
-            Invoice Date:
-          </label>
-          <input
-            id="invoiceDate"
-            className="form-control"
-            type="date"
-            value={invoiceDate}
-            onChange={(e) => setInvoiceDate(e.target.value)}
-            required
-            disabled={!isEditMode}
-          />
-          {errors.invoiceDate && <p className="error">{errors.invoiceDate}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="dueDate" className="form-label">
-            Due Date:
-          </label>
-          <input
-            id="dueDate"
-            className="form-control"
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            required
-            disabled={!isEditMode}
-          />
-          {errors.dueDate && <p className="error">{errors.dueDate}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="paymentMethod" className="form-label">
-            Payment Method:
-          </label>
-          <select
-            id="paymentMethod"
-            className="form-control"
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            required
-            disabled={!isEditMode}
-          >
-            <option value="">Select Payment Method</option>
-            <option value="Cash">Cash</option>
-            <option value="Credit Card">Credit Card</option>
-            <option value="Debit Card">Debit Card</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="Other">Other</option>
-          </select>
-          {errors.paymentMethod && (
-            <p className="error">{errors.paymentMethod}</p>
-          )}
-        </div>
+        <form id="invoiceForm" onSubmit={handleCreateOrUpdateInvoice}>
+          <div className="mb-3">
+            <label htmlFor="invoiceNumber" className="form-label">
+              Invoice Number:
+            </label>
+            <input
+              id="invoiceNumber"
+              className="form-control"
+              placeholder="Invoice Number"
+              value={invoiceNumber}
+              onChange={(e) => setInvoiceNumber(e.target.value)}
+              disabled
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="customerName" className="form-label">
+              Customer Name:
+            </label>
+            <input
+              id="customerName"
+              className="form-control"
+              placeholder="Customer Name"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              required
+              disabled={!isEditMode}
+            />
+            {errors.customerName && (
+              <p className="error">{errors.customerName}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="invoiceDate" className="form-label">
+              Invoice Date:
+            </label>
+            <input
+              id="invoiceDate"
+              className="form-control"
+              type="date"
+              value={invoiceDate}
+              onChange={(e) => setInvoiceDate(e.target.value)}
+              required
+              disabled={!isEditMode}
+            />
+            {errors.invoiceDate && (
+              <p className="error">{errors.invoiceDate}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="dueDate" className="form-label">
+              Due Date:
+            </label>
+            <input
+              id="dueDate"
+              className="form-control"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              required
+              disabled={!isEditMode}
+            />
+            {errors.dueDate && <p className="error">{errors.dueDate}</p>}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="paymentMethod" className="form-label">
+              Payment Method:
+            </label>
+            <select
+              id="paymentMethod"
+              className="form-control"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              required
+              disabled={!isEditMode}
+            >
+              <option value="">Select Payment Method</option>
+              <option value="Cash">Cash</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Other">Other</option>
+            </select>
+            {errors.paymentMethod && (
+              <p className="error">{errors.paymentMethod}</p>
+            )}
+          </div>
 
-        {isEditMode ? (
-          <>
-            <button type="submit" className="btn btn-primary me-2">
-              Update Invoice
+          {isEditMode ? (
+            <>
+              <button type="submit" className="btn btn-primary me-2">
+                Update Invoice
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setIsEditMode(true)}
+            >
+              Edit Invoice
             </button>
-          </>
-        ) : (
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => setIsEditMode(true)}
-          >
-            Edit Invoice
-          </button>
-        )}
-      </form>
+          )}
+        </form>
 
-      {/* Service component */}
-      <ServiceForm
-        _id={id}
-        setServices={setServices}
-        fetchInvoice={fetchInvoice}
-      />
+        {/* Service component */}
+        <ServiceForm
+          _id={id}
+          setServices={setServices}
+          fetchInvoice={fetchInvoice}
+        />
 
-      {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
-      <div className="mt-4">
-        <h6>Invoice Totals</h6>
-        <p>Total Amount: ${totalAmount}</p>
-        <p>Total Tax Amount: ${totalTaxAmount}</p>
-        <p>Total Discount Amount: ${totalDiscountAmount}</p>
+        {/* Display section for totalAmount, totalTaxAmount, and totalDiscountAmount */}
+        <div className="mt-4">
+          <h6>Invoice Totals</h6>
+          <p>Total Amount: ${totalAmount}</p>
+          <p>Total Tax Amount: ${totalTaxAmount}</p>
+          <p>Total Discount Amount: ${totalDiscountAmount}</p>
+        </div>
+
+        {/* Start Fresh Button */}
+        <button
+          type="button"
+          className="btn btn-danger mt-4"
+          onClick={handleClearInvoice}
+        >
+          Finish and Back to Invoice List
+        </button>
       </div>
 
-      {/* Start Fresh Button */}
-      <button
-        type="button"
-        className="btn btn-danger mt-4"
-        onClick={handleClearInvoice}
-      >
-        Finish and Back to Invoice List
-      </button>
-    </div>
+      <Footer />
+    </>
   );
 };
 
